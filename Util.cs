@@ -11,27 +11,25 @@ namespace AoC2021
     {
         public static List<string> ReadFileToLines( string filename )
         {
-            List<string> ret = new List<string>();
             string[] lines; 
             try 
             {
                 lines = File.ReadAllLines( filename ); 
+                List<string> ret = new List<string>(lines); 
+                
+                // remove erroneous empty lines at the end
+                while ((ret.Count > 0) && string.IsNullOrEmpty(ret.Last()))
+                {
+                    ret.RemoveAt(ret.Count - 1); 
+                }
+
+                return ret; 
             }
             catch (Exception e)
             {
                 Console.WriteLine( "File read failed: " + e.ToString() );
-                return ret; 
+                return new List<string>(); 
             }
-
-            foreach (string line in lines)
-            {
-                if (!string.IsNullOrEmpty(line))
-                { 
-                    ret.Add(line); 
-                }
-            }
-
-            return ret; 
         }
     }
 }
