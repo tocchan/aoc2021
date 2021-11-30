@@ -25,7 +25,7 @@ namespace AoC2021
 
             foreach (string line in lines)
             {
-                if (lines.Length > 0)
+                if (!string.IsNullOrEmpty(line))
                 { 
                     ret.Add(line); 
                 }
