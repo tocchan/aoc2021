@@ -81,7 +81,7 @@ namespace AoC2021
         //----------------------------------------------------------------------------------------------
         public string RunB()
         {
-            List<string> lines = Util.ReadFileToLines(InputFileA); 
+            List<string> lines = Util.ReadFileToLines(InputFileB); 
 
             (int x, int y) = ComputePositionB(lines); 
          
