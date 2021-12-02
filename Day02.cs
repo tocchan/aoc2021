@@ -22,6 +22,19 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
+        private (int, int) ParseDirection( string line )
+        {
+            (string dir, int amount) = ParseInstruction(line); 
+            return dir[0] switch
+            {
+                'f' => (amount, 0),
+                'd' => (0, amount), 
+                'u' => (0, -amount), 
+                _ => (0, 0)
+            }; 
+        }
+
+        //----------------------------------------------------------------------------------------------
         private (int, int) ComputePositionA( List<string> lines )
         {
             int x = 0;
@@ -29,13 +42,9 @@ namespace AoC2021
 
             foreach (string line in lines)
             { 
-                (string dir, int amount) = ParseInstruction(line); 
-                switch (dir[0])
-                {
-                    case 'f': x += amount; break; 
-                    case 'u': y -= amount; break; 
-                    case 'd': y += amount; break; 
-                }
+                (int dx, int dy) = ParseDirection(line); 
+                y += dy; 
+                x += dx;
             }
 
             return (x, y); 
@@ -50,13 +59,10 @@ namespace AoC2021
 
             foreach (string line in lines)
             { 
-                (string dir, int amount) = ParseInstruction(line); 
-                switch (dir[0])
-                {
-                    case 'f': x += amount; y += a * amount; break; 
-                    case 'u': a -= amount; break; 
-                    case 'd': a += amount; break; 
-                }
+                (int dx, int dy) = ParseDirection(line); 
+                a += dy; 
+                y += dx * a; 
+                x += dx;
             }
 
             return (x, y); 
