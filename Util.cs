@@ -31,5 +31,21 @@ namespace AoC2021
                 return new List<string>(); 
             }
         }
+
+        public static Int64 BinaryStringToInt( string s )
+        {
+            Int64 val = 0; 
+            Int64 pow = 1; 
+            for (int i = s.Length - 1; i >= 0; --i)
+            {
+                if (s[i] != '0')
+                {
+                    val += pow; 
+                }
+                pow *= 2; 
+            }
+
+            return val; 
+        }
     }
 }
