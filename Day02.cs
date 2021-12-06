@@ -8,8 +8,8 @@ namespace AoC2021
 {
     internal class Day02
     {
-        private string InputFileA = "inputs/day02.a.txt"; 
-        private string InputFileB = "inputs/day02.a.txt"; 
+        private string InputFileA = "inputs/02.txt"; 
+        private string InputFileB = "inputs/02.txt"; 
 
         //----------------------------------------------------------------------------------------------
         private (string, int) ParseInstruction( string instruction )
