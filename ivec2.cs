@@ -74,7 +74,7 @@ namespace AoC2021
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(x.GetHashCode(), y.GetHashCode());
         }
 
         public override string ToString()
