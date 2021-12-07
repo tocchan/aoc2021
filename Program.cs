@@ -1,6 +1,6 @@
 ﻿using AoC2021; 
 
-var day = new Day06(); 
+var day = new Day07(); 
 string answerA; 
 string answerB; 
 

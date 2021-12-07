@@ -8,7 +8,7 @@ namespace AoC2021
 {
     internal class Day04
     {
-        private string DebugInputFile = "inputs/04.txt"; 
+        // private string DebugInputFile = "inputs/04.txt"; 
         private string InputFile = "inputs/04.txt"; 
 
         //----------------------------------------------------------------------------------------------

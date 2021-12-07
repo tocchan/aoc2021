@@ -9,13 +9,12 @@ namespace AoC2021
     internal class DayTemplate
     {
         private string InputFile = "inputs/01.txt"; 
-        private string DebugInputFile = "inputs/02.txt"; 
 
         //----------------------------------------------------------------------------------------------
         public string RunA()
         {
-            // List<string> lines = Util.ReadFileToLines(InputFileA); 
-            return ""; 
+            List<string> lines = Util.ReadFileToLines(InputFile); 
+            return lines[0]; 
         }
 
         //----------------------------------------------------------------------------------------------

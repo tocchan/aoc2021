@@ -9,7 +9,7 @@ namespace AoC2021
     internal class Day06
     {
         private string InputFile = "inputs/06.txt"; 
-        private string DebugInputFile = "inputs/06d.txt"; 
+        // private string DebugInputFile = "inputs/06d.txt"; 
 
         //----------------------------------------------------------------------------------------------
         public void RunDay( Int64[] fishAlive )

@@ -9,7 +9,7 @@ namespace AoC2021
     internal class Day05
     {
         private string InputFile = "inputs/05.txt"; 
-        private string DebugInputFile = "inputs/05d.txt"; 
+        // private string DebugInputFile = "inputs/05d.txt"; 
 
        
         private struct Line
