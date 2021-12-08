@@ -6,68 +6,246 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-    internal class Day07
+    internal class Day08
     {
-        private string InputFile = "inputs/07.txt"; 
-
-        
-        //----------------------------------------------------------------------------------------------
-        int CalcDistance( int point, List<int> positions )
+        private string InputFile = "inputs/08.txt"; 
+     
+        public int ProcessLineA( string line )
         {
-            int sum = 0; 
-            foreach (int pos in positions)
+            string[] parts = line.Split('|', 2);
+            string[] display = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries); 
+
+            // part A is simple, just count things that are 1, 4, 7 or 8
+            int count = 0; 
+            foreach (string d in display)
             {
-                sum += Math.Abs( pos - point ); 
-            }
-            return sum; 
-        }
-
-        //----------------------------------------------------------------------------------------------
-        int CalcDistance2( int point, List<int> positions )
-        {
-            int sum = 0; 
-            foreach (int pos in positions)
-            {
-                int val = Math.Abs( pos - point ); 
-                int cost = ((val) * (val + 1)) / 2; 
-                sum += cost; 
-            }
-            return sum; 
-        }
-
-        //----------------------------------------------------------------------------------------------
-        int GetGeoMidpoint( List<int> positions, Func<int, List<int>, int> funcDist )
-        {
-            int min = positions.Min(); 
-            int max = positions.Max(); 
-
-            int minPoint = max; 
-            int minDistance = funcDist( max, positions ); 
-
-            for (int i = min; i < max; ++i)
-            {
-                int dist = funcDist( i, positions ); 
-                if (dist < minDistance)
+                int len = d.Length; 
+                if ((len == 2) || (len == 3) || (len == 4) || (len == 7))
                 {
-                    minDistance = dist; 
-                    minPoint = i; 
+                    ++count;
                 }
             }
 
-            return minPoint; 
+            return count; 
         }
 
-     
+        public string FindSequenceWithLength( string[] digits, int len )
+        {
+            return digits.Where( s => s.Length == len ).First(); 
+        }
+
+        public int GetDigitValue( string digit, string[] sequencess )
+        {
+            for (int i = 0; i < sequencess.Length; ++i)
+            {
+                if (sequencess[i] == digit)
+                {
+                    return i; 
+                }
+            }
+
+            return 0; 
+        }
+
+        string Subtract( string a, string b )
+        {
+            string ret = ""; 
+            foreach (char c in a)
+            {
+                if (!b.Contains(c)) 
+                { 
+                    ret += c; 
+                }
+            }
+
+            return ret; 
+        }
+
+        string Intersect( string a, string b )
+        {
+            string ret = "";
+            foreach (char c in a)
+            {
+                if (b.Contains(c))
+                {
+                    ret += c; 
+                }
+            }
+
+            return ret; 
+        }
+
+        string[] GetIntersections( string[] values, string against, int len )
+        {
+            List<string> ret = new List<string>(); 
+            foreach (string value in values)
+            {
+                if (value == against)
+                {
+                    continue; 
+                }
+
+                string intersection = Intersect( value, against ); 
+                if (intersection.Length == len)
+                {
+                    ret.Add(value);
+                }
+            }
+
+            return ret.ToArray(); 
+        }
+
+        string[] GetIntersectionsOfLength( string[] values, string against, int intLen, int len )
+        {
+            List<string> ret = new List<string>(); 
+            foreach (string value in values)
+            {
+                if (value.Length != len)
+                {
+                    continue; 
+                }
+
+                string intersection = Intersect( value, against ); 
+                if (intersection.Length == intLen)
+                {
+                    ret.Add(value);
+                }
+            }
+
+            return ret.ToArray(); 
+        }
+
+        public int ProcessLineB( string line )
+        {
+            string[] parts = line.Split('|', 2);
+            string[] digits = parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries); 
+            string[] display = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries); 
+
+            for (int i = 0; i < digits.Length; ++i)
+            {
+                digits[i] = String.Concat(digits[i].OrderBy(c => c)); 
+            }
+
+            for (int i = 0; i < display.Length; ++i)
+            {
+                display[i] = String.Concat(display[i].OrderBy(c => c)); 
+            }
+
+            string[] sequences = new string[10]; 
+            for (int i = 0; i < 10; ++i)
+            {
+                sequences[i] = ""; 
+            }
+
+            sequences[1] = FindSequenceWithLength( digits, 2 ); 
+            sequences[7] = FindSequenceWithLength( digits, 3 ); 
+            sequences[4] = FindSequenceWithLength( digits, 4 ); 
+            sequences[8] = FindSequenceWithLength( digits, 7 ); 
+
+            /*
+               0 0
+              1   2
+               3 3
+              4   5
+               6 6
+            */
+            char[] mapping = new char[7]; 
+            mapping[0] = Subtract( sequences[7], sequences[1] )[0];  // 7 has one more value than 1, so will tell us
+
+            // 3 is the only sequence that intersects with 1 fully is is length 5
+            {
+                sequences[3] = GetIntersectionsOfLength( digits, sequences[1], 2, 5 )[0];  
+            }
+
+            // 2 would be the only one that intersects with 1 once, 5 & 6 intersect 1 with the same value
+            {
+                string[] twoFiveOrSix = GetIntersections( digits, sequences[1], 1 ); 
+                char[] intersections = new char[3]; 
+                intersections[0] = Intersect( twoFiveOrSix[0], sequences[1] )[0]; 
+                intersections[1] = Intersect( twoFiveOrSix[1], sequences[1] )[0]; 
+                intersections[2] = Intersect( twoFiveOrSix[2], sequences[1] )[0]; 
+
+                // the first one is the pair
+                if ((intersections[0] == intersections[1]) || (intersections[0] == intersections[2]))
+                {
+                    mapping[5] = intersections[0]; 
+                    int twoIdx = (intersections[0] == intersections[1]) ? 2 : 1; 
+                    int otherIdx = (twoIdx == 2 ? 1 : 2); 
+                    mapping[2] = intersections[twoIdx]; 
+
+                    sequences[2] = (intersections[0] == intersections[1]) ? twoFiveOrSix[2] : twoFiveOrSix[1]; 
+                    if (twoFiveOrSix[0].Length == 6)
+                    {
+                        sequences[6] = twoFiveOrSix[0]; 
+                        sequences[5] = twoFiveOrSix[otherIdx]; 
+                    }
+                    else
+                    {
+                        sequences[6] = twoFiveOrSix[otherIdx]; 
+                        sequences[5] = twoFiveOrSix[0]; 
+                    }
+                }
+                else // first one is unique
+                {
+                    sequences[2] = twoFiveOrSix[0]; 
+                    if (twoFiveOrSix[1].Length == 6)
+                    {
+                        sequences[6] = twoFiveOrSix[1]; 
+                        sequences[5] = twoFiveOrSix[2]; 
+                    }
+                    else
+                    {
+                        sequences[6] = twoFiveOrSix[2]; 
+                        sequences[5] = twoFiveOrSix[1]; 
+                    }
+
+                    mapping[2] = intersections[0]; 
+                    mapping[5] = intersections[1]; 
+                }
+            }
+
+            // 8 & 9 fully intersect with 3, 8 is known, so this will give us 9
+            {
+                string[] eightAndNine = GetIntersections( digits, sequences[3], 5 ); 
+                sequences[9] = (eightAndNine[0].Length == 7) ? eightAndNine[1] : eightAndNine[0]; 
+            }
+
+            // 0 is all that remains
+            {
+                List<string> allDigits = digits.ToList(); 
+                foreach (string s in sequences)
+                {
+                    allDigits.Remove(s); 
+                }
+
+                sequences[0] = allDigits[0]; 
+            }
+
+            int count = 0; 
+            int power = 1; 
+            for (int i = display.Length - 1; i >= 0; --i)
+            {
+                int digitVal = GetDigitValue(display[i], sequences); 
+                count += digitVal * power; 
+                power *= 10; 
+            }
+
+             return count; 
+        }
+
         //----------------------------------------------------------------------------------------------
         public string RunA()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
-            List<int> initialPositions = lineInput[0].Split(',').Select(int.Parse).ToList(); 
+            
+            int count = 0; 
+            foreach (string line in lineInput)
+            {
+                count += ProcessLineA( line );
+            }
 
-            int midpoint = GetGeoMidpoint( initialPositions, CalcDistance ); 
-            int distance = CalcDistance( midpoint, initialPositions ); 
 
-            return distance.ToString(); 
+            return count.ToString(); 
         }
 
 
@@ -75,12 +253,16 @@ namespace AoC2021
         public string RunB()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
-            List<int> initialPositions = lineInput[0].Split(',').Select(int.Parse).ToList(); 
+            
+            int count = 0; 
+            foreach (string line in lineInput)
+            {
+                count += ProcessLineB( line );
+            }
 
-            int midpoint = GetGeoMidpoint( initialPositions, CalcDistance2 ); 
-            int distance = CalcDistance2( midpoint, initialPositions ); 
 
-            return distance.ToString(); 
+            return count.ToString(); 
         }
     }
 }
+
