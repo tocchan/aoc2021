@@ -12,8 +12,8 @@ namespace AoC2021
      
         public int ProcessLineA( string line )
         {
-            string[] parts = line.Split('|', 2);
-            string[] display = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries); 
+            (string digitString, string displayString) = line.Split('|', 2); 
+            string[] display = displayString.Split(' ', StringSplitOptions.RemoveEmptyEntries); 
 
             // part A is simple, just count things that are 1, 4, 7 or 8
             int count = 0; 
