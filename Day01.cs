@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-    internal class Day01
+    internal class Day01 : Day
     {
         private string InputFileA = "inputs/01.txt"; 
         private string InputFileB = "inputs/01.txt"; 
 
         //----------------------------------------------------------------------------------------------
-        public string RunA()
+        public override string RunA()
         {
             List<string> lines = Util.ReadFileToLines(InputFileA); 
             List<int> values = lines.Select(int.Parse).ToList(); 
@@ -30,7 +30,7 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
-        public string RunB()
+        public override string RunB()
         {
             List<string> lines = Util.ReadFileToLines(InputFileB); 
             List<int> values = lines.Select(int.Parse).ToList(); 
