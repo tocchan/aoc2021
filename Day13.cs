@@ -182,18 +182,8 @@ namespace AoC2021
             {
                 paper = GetFoldedPage( paper, fold ); 
             }
-
-            int count = 0; 
-            foreach (char c in paper)
-            {
-                if (c == '#')
-                {
-                    ++count; 
-                }
-            }
-
-            Console.WriteLine( PrintPage( paper ) ); 
-            return count.ToString(); 
+         
+            return "\n" + PrintPage( paper ); 
         }
     }
 }
