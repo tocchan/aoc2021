@@ -78,10 +78,7 @@ namespace AoC2021
 
             if (expectedClose.Count > 0)
             {
-                while (expectedClose.Count > 0) 
-                { 
-                    closer += expectedClose.Pop(); 
-                }
+                closer = new string( expectedClose.ToArray() ); 
                 return LineStatus.INCOMPLETE; 
             }
             else 
