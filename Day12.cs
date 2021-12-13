@@ -147,7 +147,6 @@ namespace AoC2021
             if (node.IsMinor()) 
             {
                 if (node.IsVisited && (hasVisitedMinor || node.IsStart())) 
-                // if (node.IsVisited)
                 {
                     return 0;     
                 }

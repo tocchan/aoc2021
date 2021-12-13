@@ -51,6 +51,17 @@ namespace AoC2021
         public static ivec2 Min( ivec2 a, ivec2 b ) => new ivec2( Math.Min(a.x, b.x), Math.Min(a.y, b.y) ); 
         public static ivec2 Max( ivec2 a, ivec2 b ) => new ivec2( Math.Max(a.x, b.x), Math.Max(a.y, b.y) ); 
 
+        public static ivec2 Max( IEnumerable<ivec2> list )
+        {
+            ivec2 ret = list.First(); 
+            foreach (ivec2 v in list)
+            {
+                ret = ivec2.Max( ret, v ); 
+            }
+
+            return ret; 
+        }
+
         public static int Dot( ivec2 a, ivec2 b ) => a.x * b.x + a.y * b.y; 
 
         public static ivec2 Parse( string s )
