@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-
     internal class Day15
     {
         private string InputFile = "inputs/15.txt"; 
