@@ -12,7 +12,7 @@ Util.WriteLine( @"[+white]      \::./    \::./    \::./    \::./    \::./    \::
 Util.WriteLine( @"[+white]       '='      '='      '='      '='      '='      '='   "); 
 Util.WriteLine( @"[   red]                ------------------------------            "); 
 Util.WriteLine( @"[ green]                        AoC.2021." + day.GetType().Name    ); 
-Util.WriteLine(  "[   red]                ------------------------------       \n\n" ); 
+Util.WriteLine(  "[   red]                ------------------------------         \n" ); 
 
 string answerA; 
 string answerB; 
@@ -29,7 +29,7 @@ Util.WriteLine($" > Answer A: [+white]{answerA}\n");
     using var t = new ScopeTimer(" Part B"); 
     answerB = day.RunB(); 
 }
-Util.WriteLine($" > Answer B: [+white]{answerB}"); 
+Util.WriteLine($" > Answer B: [+white]{answerB}\n"); 
 
 // Copy answer to clipboard out of laziness;
 if (!string.IsNullOrEmpty(answerB))
