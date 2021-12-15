@@ -2,17 +2,17 @@
 
 Day? day = Day.Create( args.FirstOrDefault(), typeof(Day15) ); 
 
-Util.WriteLine( @"[  cyan]         .--._.--.--.__.--.--.__.--.--.__.--.--._.--."); 
-Util.WriteLine( @"[  cyan]       _(_      _Y_      _Y_      _Y_      _Y_      _)_"); 
-Util.WriteLine( @"[yellow]      [___]    [___]    [___]    [___]    [___]    [___]"); 
-Util.WriteLine( @"[+white]      /:' \    /:' \    /:' \    /:' \    /:' \    /:' \"); 
-Util.WriteLine( @"[+white]     |::   |  |::   |  |::   |  |::   |  |::   |  |::   |"); 
-Util.WriteLine( @"[+white]     \::.  /  \::.  /  \::.  /  \::.  /  \::.  /  \::.  /"); 
-Util.WriteLine( @"[+white]      \::./    \::./    \::./    \::./    \::./    \::./"); 
-Util.WriteLine( @"[+white]       '='      '='      '='      '='      '='      '='"); 
-Util.WriteLine( @"[   red]                ------------------------------" ); 
-Util.WriteLine( @"[ green]                        AoC.2021." + day.GetType().Name ); 
-Util.WriteLine(  "[   red]                ------------------------------\n\n" ); 
+Util.WriteLine( @"[  cyan]         .--._.--.--.__.--.--.__.--.--.__.--.--._.--.     "); 
+Util.WriteLine( @"[  cyan]       _(_      _Y_      _Y_      _Y_      _Y_      _)_   "); 
+Util.WriteLine( @"[yellow]      [___]    [___]    [___]    [___]    [___]    [___]  "); 
+Util.WriteLine( @"[+white]      /:' \    /:' \    /:' \    /:' \    /:' \    /:' \  "); 
+Util.WriteLine( @"[+white]     |::   |  |::   |  |::   |  |::   |  |::   |  |::   | "); 
+Util.WriteLine( @"[+white]     \::.  /  \::.  /  \::.  /  \::.  /  \::.  /  \::.  / "); 
+Util.WriteLine( @"[+white]      \::./    \::./    \::./    \::./    \::./    \::./  "); 
+Util.WriteLine( @"[+white]       '='      '='      '='      '='      '='      '='   "); 
+Util.WriteLine( @"[   red]                ------------------------------            "); 
+Util.WriteLine( @"[ green]                        AoC.2021." + day.GetType().Name    ); 
+Util.WriteLine(  "[   red]                ------------------------------       \n\n" ); 
 
 string answerA; 
 string answerB; 
