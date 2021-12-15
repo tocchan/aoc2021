@@ -59,6 +59,12 @@ namespace AoC2021
                 ("+white",   "\u001b[37;1m")
             }; 
 
+            // forgive me...
+            while (str.Contains("[ "))
+            {
+                str = str.Replace("[ ", "["); 
+            }
+
             // todo: bug that I'm not escaping the '<' character, but not a case I need so ignoring it; 
             // todo: currently unhandled types will be left in, would be nice to cleanse and warn about them
             foreach ((string find, string replace) in list)

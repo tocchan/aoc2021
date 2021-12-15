@@ -20,7 +20,7 @@ namespace AoC2021
         protected virtual void Dispose(bool disposing)
         {
             m_stopwatch.Stop();
-            Console.WriteLine( Util.ApplyMarkup($"[cyan]{m_label} took [yellow]{FormatTime()}.") ); 
+            Console.WriteLine( Util.ApplyMarkup($"[cyan]{m_label} took {FormatTime()}.") ); 
         }
 
         private string FormatTime()
@@ -28,15 +28,18 @@ namespace AoC2021
             double seconds = m_stopwatch.Elapsed.TotalSeconds;
             if (seconds > 0.5)
             {
-                return seconds.ToString("0.000") + "s"; 
+                string time = seconds.ToString("0.000");
+                return $"[red]{time}s"; 
             } 
             else if (seconds > 0.001)
             {
-                return (1000.0 * seconds).ToString("0.000") + "ms"; 
+                string time = (1000.0 * seconds).ToString("0.000");
+                return $"[yellow]{time}ms"; 
             }
             else
             {
-                return (1000000.0 * seconds).ToString("0.000") + "us"; 
+                string time = (1000000.0 * seconds).ToString("0.000");
+                return $"[green]{time}us"; 
             }
         }
 
