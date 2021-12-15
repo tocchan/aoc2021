@@ -13,27 +13,17 @@ namespace AoC2021
 
         public static Day? Create( string? num, System.Type defType )
         {
-            if (num == null)
+            int dayNum;
+            if (string.IsNullOrEmpty(num) || (num.Length > 2) || !int.TryParse(num, out dayNum))
             {
                 return (Day?) Activator.CreateInstance(defType);
             }
 
-            if (num.Length < 2)
-            {
-                num = "0" + num; 
-            }
-
-            string className = "AoC2021.Day" + num; 
-            System.Runtime.Remoting.ObjectHandle? objHandle = Activator.CreateInstance("AoC2021", className); 
-            if (objHandle != null)
-            {
-                return (Day?) objHandle.Unwrap(); 
-            }
-            else
-            {
-                Console.WriteLine( "Unknown Day: " + className ); 
-                return null; 
-            }
+            num = (num.Length < 2) ? $"0{num}" : num; 
+            string className = $"AoC2021.Day{num}"; 
+            System.Type? type = Type.GetType(className); 
+            type = (type == null) ? defType : type; 
+            return (Day?) Activator.CreateInstance(type); 
         }
     }
 }
