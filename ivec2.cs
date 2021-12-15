@@ -16,6 +16,12 @@ namespace AoC2021
         public static readonly ivec2 ZERO = new ivec2(0, 0); 
         public static readonly ivec2 ONE = new ivec2(1, 1); 
 
+        public static readonly ivec2 LEFT = new ivec2(-1, 0); 
+        public static readonly ivec2 RIGHT = new ivec2(1, 0); 
+        public static readonly ivec2 UP = new ivec2(0, -1); 
+        public static readonly ivec2 DOWN = new ivec2(0, 1); 
+
+
 
         public ivec2( int v )
         {
