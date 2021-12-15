@@ -143,6 +143,39 @@ namespace AoC2021
         public int GetWidth() => Width; 
         public int GetHeight() => Height; 
 
+        public int this[int x, int y]
+        {
+            get => Get(x, y);
+            set => Set(x, y, value);
+        }
+
+        public int this[ivec2 p]
+        {
+            get => Get(p.x, p.y); 
+            set => Set(p.x, p.y, value); 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        // Runs a function on the map, returning the new value for each cell.
+        // Value changes apply at the very end.  
+        public void CellStep( Func<ivec2, int> func )
+        {
+            int[] newData = new int[Width * Height]; 
+
+            int idx = 0; 
+            ivec2 p; 
+            for (p.y = 0; p.y < Height; ++p.y)
+            {
+                for (p.x = 0; p.x < Width; ++p.x)
+                {
+                    newData[idx] = func(p); 
+                    ++idx; 
+                }
+            }
+
+            Data = newData; 
+        }
+
         //----------------------------------------------------------------------------------------------
         public List<ivec2> FindPathDijkstra(ivec2 start, ivec2 end)
         {
