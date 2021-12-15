@@ -1,23 +1,6 @@
 ﻿using AoC2021;
 
-Day day = args.FirstOrDefault() switch
-{
-    "1" => new Day01(),
-    "2" => new Day02(),
-    "3" => new Day03(),
-    "4" => new Day04(),
-    "5" => new Day05(),
-    "6" => new Day06(),
-    "7" => new Day07(),
-    "8" => new Day08(),
-    "9" => new Day09(),
-    "10" => new Day10(),
-    _ => new Day11(),
-};
-
-string answerA; 
-string answerB; 
-
+Day? day = Day.Create( args.FirstOrDefault(), typeof(Day15) ); 
 
 Console.WriteLine( "         .--._.--.--.__.--.--.__.--.--.__.--.--._.--."); 
 Console.WriteLine( "       _(_      _Y_      _Y_      _Y_      _Y_      _)_"); 
@@ -31,6 +14,8 @@ Console.WriteLine( "                ------------------------------" );
 Console.WriteLine( "                        AoC.2021." + day.GetType().Name ); 
 Console.WriteLine( "                ------------------------------" ); 
 
+string answerA; 
+string answerB; 
 
 // Run Part A
 {

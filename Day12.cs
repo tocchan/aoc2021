@@ -176,12 +176,12 @@ namespace AoC2021
 
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
-    internal class Day12
+    internal class Day12 : Day
     {
         private string InputFile = "inputs/12.txt"; 
 
         //----------------------------------------------------------------------------------------------
-        public string RunA()
+        public override string RunA()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
             CaveMap map = new CaveMap( lineInput ); 
@@ -191,7 +191,7 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
-        public string RunB()
+        public override string RunB()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
             CaveMap map = new CaveMap( lineInput ); 
