@@ -10,24 +10,22 @@ namespace AoC2021
     {
         private string InputFile = "inputs/11.txt"; 
 
-        private int Flash( ivec2 coord, int[,] grid )
+        //----------------------------------------------------------------------------------------------
+        private int Flash( ivec2 coord, IntHeatMap2D grid )
         {
             int numFlashes = 0; 
             ivec2 min = ivec2.Max( coord - new ivec2(1, 1), ivec2.ZERO ); 
             ivec2 max = ivec2.Min( coord + new ivec2(1, 1), new ivec2(9, 9) ); 
             
-            for (int x = min.x; x <= max.x; ++x)
+            foreach( (ivec2 p, int v) in grid.GetRegionEnumerator( coord - ivec2.ONE, coord + ivec2.ONE ) )
             {
-                for (int y = min.y; y <= max.y; ++y)
-                {
-                    if (grid[x, y] < 10) 
-                    { 
-                        ++grid[x, y]; 
-                        if (grid[x, y] >= 10) 
-                        {
-                            ++numFlashes; 
-                            numFlashes += Flash( new ivec2(x, y), grid ); 
-                        }
+                if (v < 10) 
+                { 
+                    ++grid[p]; 
+                    if (grid[p] >= 10) 
+                    {
+                        ++numFlashes; 
+                        numFlashes += Flash( p, grid ); 
                     }
                 }
             }
@@ -35,36 +33,24 @@ namespace AoC2021
             return numFlashes;
         }
 
-        private int RunDay( int[,] grid )
+        //----------------------------------------------------------------------------------------------
+        private int RunDay( IntHeatMap2D grid )
         {
             int numFlashes = 0; 
-            for (int x = 0; x < grid.GetLength(0); ++x)
+            foreach ((ivec2 p, int v) in grid) 
             {
-                for (int y = 0; y < grid.GetLength(1); ++y)
+                if (grid[p] < 10) 
                 {
-                    if (grid[x, y] < 10) 
-                    {
-                        ++grid[x, y]; 
-                        if (grid[x, y] >= 10) 
-                        { 
-                            ++numFlashes; 
-                            numFlashes += Flash( new ivec2(x, y), grid ); 
-                        }
+                    ++grid[p]; 
+                    if (grid[p] >= 10) 
+                    { 
+                        ++numFlashes; 
+                        numFlashes += Flash( p, grid ); 
                     }
                 }
             }
 
-            for (int x = 0; x < grid.GetLength(0); ++x)
-            {
-                for (int y = 0; y < grid.GetLength(1); ++y)
-                {
-                    if (grid[x, y] >= 10) 
-                    { 
-                        grid[x, y] = 0; 
-                    }
-                }
-            }
-            
+            grid.CellStep( (p, v) => v >= 10 ? 0 : v ); 
             return numFlashes; 
         }
 
@@ -72,19 +58,8 @@ namespace AoC2021
         public string RunA()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
-            int[,] grid = new int[10,10]; 
+            IntHeatMap2D grid = new IntHeatMap2D( lineInput ); 
 
-            int y = 0; 
-            foreach (string line in lineInput)
-            {
-                int x = 0; 
-                foreach (char c in line)
-                {
-                    grid[x, y] = c - '0'; 
-                    ++x; 
-                }
-                ++y;
-            }
 
             int numDays = 100; 
             int numFlashes = 0; 
@@ -100,19 +75,7 @@ namespace AoC2021
         public string RunB()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
-            int[,] grid = new int[10,10]; 
-
-            int y = 0; 
-            foreach (string line in lineInput)
-            {
-                int x = 0; 
-                foreach (char c in line)
-                {
-                    grid[x, y] = c - '0'; 
-                    ++x; 
-                }
-                ++y;
-            }
+            IntHeatMap2D grid = new IntHeatMap2D( lineInput ); 
 
             int numDays = 0; 
             int flashCount = 0; 

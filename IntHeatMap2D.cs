@@ -7,6 +7,16 @@ namespace AoC2021
     public class IntHeatMap2D : IEnumerable<(ivec2,int)>
     {
         //----------------------------------------------------------------------------------------------
+        public IntHeatMap2D()
+        {
+        }
+
+        public IntHeatMap2D( List<string> lines )
+        {
+            SetFromTightBlock( lines ); 
+        }
+
+        //----------------------------------------------------------------------------------------------
         public void Resize( int width, int height, bool keep = false )
         {
             int[] newData = new int[width * height]; 
@@ -131,6 +141,23 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
+        public IEnumerable<(ivec2,int)> GetRegionEnumerator( ivec2 minInclusive, ivec2 maxInclusive )
+        {
+            ivec2 min = ivec2.Max( ivec2.ZERO, minInclusive ); 
+            ivec2 max = ivec2.Min( GetSize() - ivec2.ONE, maxInclusive ); 
+
+            ivec2 p; 
+            for (p.y = min.y; p.y <= max.y; ++p.y)
+            {
+                for (p.x = min.x; p.x <= max.x; ++p.x)
+                {
+                    int val = Data[GetIndex(p)]; // no bounds check needed - I make sure all iterations are in here; 
+                    yield return (p, val); 
+                }
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------
         public ivec2 GetSize()
         {
             ivec2 ret; 
@@ -158,7 +185,7 @@ namespace AoC2021
         //----------------------------------------------------------------------------------------------
         // Runs a function on the map, returning the new value for each cell.
         // Value changes apply at the very end.  
-        public void CellStep( Func<ivec2, int> func )
+        public void CellStep( Func<ivec2, int, int> func )
         {
             int[] newData = new int[Width * Height]; 
 
@@ -168,7 +195,7 @@ namespace AoC2021
             {
                 for (p.x = 0; p.x < Width; ++p.x)
                 {
-                    newData[idx] = func(p); 
+                    newData[idx] = func(p, Data[idx]); 
                     ++idx; 
                 }
             }
