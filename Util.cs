@@ -36,5 +36,44 @@ namespace AoC2021
         {
             return Convert.ToInt64( s, 2 );
         }
+
+        public static string ApplyMarkup( string str )
+        {
+            (string,string)[] list = {
+                ("-",        "\u001b[0m"),
+                ("black",    "\u001b[30m"),
+                ("red",      "\u001b[31m"),
+                ("green",    "\u001b[32m"),
+                ("yellow",   "\u001b[33m"),
+                ("blue",     "\u001b[34m"),
+                ("magenta",  "\u001b[35m"),
+                ("cyan",     "\u001b[36m"),
+                ("white",    "\u001b[37m"),
+                ("+black",   "\u001b[30;1m"),
+                ("+red",     "\u001b[31;1m"),
+                ("+green",   "\u001b[32;1m"),
+                ("+yellow",  "\u001b[33;1m"),
+                ("+blue",    "\u001b[34;1m"),
+                ("+magenta", "\u001b[35;1m"),
+                ("+cyan",    "\u001b[36;1m"),
+                ("+white",   "\u001b[37;1m")
+            }; 
+
+            // todo: bug that I'm not escaping the '<' character, but not a case I need so ignoring it; 
+            // todo: currently unhandled types will be left in, would be nice to cleanse and warn about them
+            foreach ((string find, string replace) in list)
+            {
+                string search = $"[{find}]"; 
+                str = str.Replace( search, replace ); 
+            }
+
+            // always cleanup at the end of a line; 
+            return $"{str}{list[0].Item2}"; 
+        }
+
+        public static void WriteLine( string line )
+        {
+            Console.WriteLine( ApplyMarkup(line) ); 
+        }
     }
 }

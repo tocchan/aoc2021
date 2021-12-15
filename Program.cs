@@ -2,34 +2,34 @@
 
 Day? day = Day.Create( args.FirstOrDefault(), typeof(Day15) ); 
 
-Console.WriteLine( "         .--._.--.--.__.--.--.__.--.--.__.--.--._.--."); 
-Console.WriteLine( "       _(_      _Y_      _Y_      _Y_      _Y_      _)_"); 
-Console.WriteLine( "      [___]    [___]    [___]    [___]    [___]    [___]"); 
-Console.WriteLine( "      /:' \\    /:' \\    /:' \\    /:' \\    /:' \\    /:' \\"); 
-Console.WriteLine( "     |::   |  |::   |  |::   |  |::   |  |::   |  |::   |"); 
-Console.WriteLine( "     \\::.  /  \\::.  /  \\::.  /  \\::.  /  \\::.  /  \\::.  /"); 
-Console.WriteLine( "      \\::./    \\::./    \\::./    \\::./    \\::./    \\::./"); 
-Console.WriteLine( "       '='      '='      '='      '='      '='      '='"); 
-Console.WriteLine( "                ------------------------------" ); 
-Console.WriteLine( "                        AoC.2021." + day.GetType().Name ); 
-Console.WriteLine( "                ------------------------------" ); 
+Util.WriteLine( "[cyan]         .--._.--.--.__.--.--.__.--.--.__.--.--._.--."); 
+Util.WriteLine( "[cyan]       _(_      _Y_      _Y_      _Y_      _Y_      _)_"); 
+Util.WriteLine( "[yellow]      [___]    [___]    [___]    [___]    [___]    [___]"); 
+Util.WriteLine( "[+white]      /:' \\    /:' \\    /:' \\    /:' \\    /:' \\    /:' \\"); 
+Util.WriteLine( "[+white]     |::   |  |::   |  |::   |  |::   |  |::   |  |::   |"); 
+Util.WriteLine( "[+white]     \\::.  /  \\::.  /  \\::.  /  \\::.  /  \\::.  /  \\::.  /"); 
+Util.WriteLine( "[+white]      \\::./    \\::./    \\::./    \\::./    \\::./    \\::./"); 
+Util.WriteLine( "[+white]       '='      '='      '='      '='      '='      '='"); 
+Util.WriteLine( "[red]                ------------------------------" ); 
+Util.WriteLine( "[green]                        AoC.2021." + day.GetType().Name ); 
+Util.WriteLine( "[red]                ------------------------------\n\n" ); 
 
 string answerA; 
 string answerB; 
 
 // Run Part A
 {
-    using var t = new ScopeTimer("Part A"); 
+    using var t = new ScopeTimer(" Part A"); 
     answerA = day.RunA(); 
 }
-Console.WriteLine($"Answer A: {answerA}");
+Util.WriteLine($" > Answer A: [+white]{answerA}\n");
 
 // Run Part B
 {
-    using var t = new ScopeTimer("Part B"); 
+    using var t = new ScopeTimer(" Part B"); 
     answerB = day.RunB(); 
 }
-Console.WriteLine($"Answer B: {answerB}"); 
+Util.WriteLine($" > Answer B: [+white]{answerB}"); 
 
 // Copy answer to clipboard out of laziness;
 if (!string.IsNullOrEmpty(answerB))
