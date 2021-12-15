@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-    internal class Day07
+    internal class Day07 : Day
     {
         private string InputFile = "inputs/07.txt"; 
 
@@ -59,7 +59,7 @@ namespace AoC2021
 
      
         //----------------------------------------------------------------------------------------------
-        public string RunA()
+        public override string RunA()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
             List<int> initialPositions = lineInput[0].Split(',').Select(int.Parse).ToList(); 
@@ -72,7 +72,7 @@ namespace AoC2021
 
 
         //----------------------------------------------------------------------------------------------
-        public string RunB()
+        public override string RunB()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
             List<int> initialPositions = lineInput[0].Split(',').Select(int.Parse).ToList(); 

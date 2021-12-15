@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-    internal class Day11
+    internal class Day11 : Day
     {
         private string InputFile = "inputs/11.txt"; 
 
@@ -55,7 +55,7 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
-        public string RunA()
+        public override string RunA()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
             IntHeatMap2D grid = new IntHeatMap2D( lineInput ); 
@@ -72,7 +72,7 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
-        public string RunB()
+        public override string RunB()
         {
             List<string> lineInput = Util.ReadFileToLines(InputFile); 
             IntHeatMap2D grid = new IntHeatMap2D( lineInput ); 

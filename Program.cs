@@ -1,6 +1,20 @@
-﻿using AoC2021; 
+﻿using AoC2021;
 
-var day = new Day11(); 
+Day day = args.FirstOrDefault() switch
+{
+    "1" => new Day01(),
+    "2" => new Day02(),
+    "3" => new Day03(),
+    "4" => new Day04(),
+    "5" => new Day05(),
+    "6" => new Day06(),
+    "7" => new Day07(),
+    "8" => new Day08(),
+    "9" => new Day09(),
+    "10" => new Day10(),
+    _ => new Day11(),
+};
+
 string answerA; 
 string answerB; 
 

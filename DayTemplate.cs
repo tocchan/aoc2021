@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-    internal class DayTemplate
+    internal class DayTemplate : Day
     {
         private string InputFile = "inputs/01.txt"; 
 
         //----------------------------------------------------------------------------------------------
-        public string RunA()
+        public override string RunA()
         {
             List<string> lines = Util.ReadFileToLines(InputFile); 
             return lines[0]; 
         }
 
         //----------------------------------------------------------------------------------------------
-        public string RunB()
+        public override string RunB()
         {
             // List<string> lines = Util.ReadFileToLines(InputFileB); 
             return ""; 

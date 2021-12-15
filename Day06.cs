@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AoC2021
 {
-    internal class Day06
+    internal class Day06 : Day
     {
         private string InputFile = "inputs/06.txt"; 
         // private string DebugInputFile = "inputs/06d.txt"; 
@@ -50,14 +50,14 @@ namespace AoC2021
         }
      
         //----------------------------------------------------------------------------------------------
-        public string RunA()
+        public override string RunA()
         {
             return RunForDays(80).ToString(); 
         }
 
 
         //----------------------------------------------------------------------------------------------
-        public string RunB()
+        public override string RunB()
         {
             return RunForDays(256).ToString();
         }
