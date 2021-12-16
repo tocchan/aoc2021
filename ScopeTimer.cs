@@ -20,7 +20,10 @@ namespace AoC2021
         protected virtual void Dispose(bool disposing)
         {
             m_stopwatch.Stop();
-            Console.WriteLine( Util.ApplyMarkup($"[cyan]{m_label} took {FormatTime()}.") ); 
+            if (!string.IsNullOrEmpty(m_label)) 
+            { 
+                Console.WriteLine( Util.ApplyMarkup($"[cyan]{m_label} took {FormatTime()}.") ); 
+            }
         }
 
         private string FormatTime()

@@ -17,6 +17,12 @@ Util.WriteLine(  "[   red]                ------------------------------        
 string answerA; 
 string answerB; 
 
+// Warmup Run
+{
+    using var t = new ScopeTimer(""); 
+    answerA = day.RunA(); 
+}
+
 // Run Part A
 {
     using var t = new ScopeTimer(" Part A"); 
