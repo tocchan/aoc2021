@@ -81,5 +81,20 @@ namespace AoC2021
         {
             Console.WriteLine( ApplyMarkup(line) ); 
         }
+
+        public static (float, float) Quadratic( float a, float b, float c )
+        {
+            float inner = b * b - 4 * a * c; 
+            if (inner < 0)
+            {
+                return (float.NaN, float.NaN); 
+            }
+
+            inner = MathF.Sqrt(inner); 
+            float ansA = (-b - inner) / (2 * a); 
+            float ansB = (-b + inner) / (2 * a); 
+
+            return (ansA, ansB); 
+        }
     }
 }

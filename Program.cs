@@ -1,6 +1,6 @@
 ﻿using AoC2021;
 
-Day? day = Day.Create( args.FirstOrDefault(), typeof(Day16) ); 
+Day? day = Day.Create( args.FirstOrDefault(), typeof(Day17) ); 
 
 Util.WriteLine( @"[  cyan]         .--._.--.--.__.--.--.__.--.--.__.--.--._.--.     "); 
 Util.WriteLine( @"[  cyan]       _(_      _Y_      _Y_      _Y_      _Y_      _)_   "); 
