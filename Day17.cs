@@ -69,7 +69,7 @@ namespace AoC2021
 
             // every possible x velocity that would hit it. 
             (float x0, float x1) = Util.Quadratic( 1, 1, -2.0f * min.x ); 
-            int minVelX = (int) Math.Floor( Math.Max( x0, x1 ) ); 
+            int minVelX = (int) Math.Ceiling( Math.Max( x0, x1 ) ); 
             int maxVelX = max.x; 
             
             ivec2 minV = new ivec2(minVelX, minVelY); 
