@@ -1,6 +1,6 @@
 ﻿using AoC2021;
 
-Day? day = Day.Create( args.FirstOrDefault(), typeof(Day17) ); 
+Day? day = Day.Create( args.FirstOrDefault(), typeof(Day19) ); 
 
 Util.WriteLine( @"[  cyan]         .--._.--.--.__.--.--.__.--.--.__.--.--._.--.     "); 
 Util.WriteLine( @"[  cyan]       _(_      _Y_      _Y_      _Y_      _Y_      _)_   "); 
@@ -20,6 +20,7 @@ string answerB;
 // Warmup Run
 {
     using var t = new ScopeTimer(""); 
+    day.ParseInput(); 
     answerA = day.RunA(); 
 }
 
