@@ -19,9 +19,8 @@ string answerB;
 
 // Warmup Run
 {
-    using var t = new ScopeTimer(""); 
+    using var t = new ScopeTimer("Parsing Input"); 
     day.ParseInput(); 
-    answerA = day.RunA(); 
 }
 
 // Run Part A
