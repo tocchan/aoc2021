@@ -10,6 +10,11 @@ namespace AoC2021
     {
         private string InputFile = "inputs/06.txt"; 
         // private string DebugInputFile = "inputs/06d.txt"; 
+        
+        //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
 
         //----------------------------------------------------------------------------------------------
         public void RunDay( Int64[] fishAlive )

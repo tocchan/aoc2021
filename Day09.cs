@@ -11,6 +11,11 @@ namespace AoC2021
         private string InputFile = "inputs/09.txt"; 
      
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         private int GetHeight( int[,] heightmap, int x, int y )
         {
             int w = heightmap.GetLength(0); 

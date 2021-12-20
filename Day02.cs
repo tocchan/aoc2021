@@ -12,6 +12,11 @@ namespace AoC2021
         private string InputFileB = "inputs/02.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         private (string, int) ParseInstruction( string instruction )
         {
             string[] parts = instruction.Split(' ', 2); 

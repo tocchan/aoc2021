@@ -11,6 +11,11 @@ namespace AoC2021
         private string InputFile = "inputs/17.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         private (ivec2, ivec2) GetTargetArea( string line )
         {
             string usefulBit = line.Substring( line.IndexOf(':') + 2 ); 

@@ -12,6 +12,11 @@ namespace AoC2021
         private string InputFile = "inputs/04.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         public void ParseBoards( List<int[,]> boards, List<string> input )
         {
             int count = input.Count; 

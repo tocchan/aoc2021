@@ -11,6 +11,11 @@ namespace AoC2021
         private string InputFile = "inputs/11.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         private int Flash( ivec2 coord, IntHeatMap2D grid )
         {
             int numFlashes = 0; 

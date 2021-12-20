@@ -8,6 +8,7 @@ namespace AoC2021
 {
     internal abstract class Day
     {
+        abstract public void ParseInput(); 
         abstract public string RunA();
         abstract public string RunB();
 

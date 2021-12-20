@@ -13,6 +13,11 @@ namespace AoC2021
         private string InputFile = "inputs/13.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         char[,] ParsePage( ref List<string> lines )
         {
             List<ivec2> points = new List<ivec2>(); 

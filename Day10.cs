@@ -9,7 +9,12 @@ namespace AoC2021
     internal class Day10 : Day
     {
         private string InputFile = "inputs/10.txt"; 
-     
+
+        //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
         //----------------------------------------------------------------------------------------------
         public enum LineStatus
         {

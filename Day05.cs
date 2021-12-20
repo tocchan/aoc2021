@@ -11,7 +11,12 @@ namespace AoC2021
         private string InputFile = "inputs/05.txt"; 
         // private string DebugInputFile = "inputs/05d.txt"; 
 
-       
+        //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         private struct Line
         {
             public ivec2 Start; 

@@ -10,7 +10,11 @@ namespace AoC2021
     {
         private string InputFile = "inputs/07.txt"; 
 
-        
+        //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
         //----------------------------------------------------------------------------------------------
         int CalcDistance( int point, List<int> positions )
         {

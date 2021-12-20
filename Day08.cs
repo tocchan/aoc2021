@@ -10,6 +10,11 @@ namespace AoC2021
     {
         private string InputFile = "inputs/08.txt"; 
      
+        //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
         public int ProcessLineA( string line )
         {
             (string digitString, string displayString) = line.Split('|', 2); 

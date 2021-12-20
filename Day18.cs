@@ -11,10 +11,15 @@ namespace AoC2021
         private string InputFile = "inputs/18d.txt"; 
 
         //----------------------------------------------------------------------------------------------
-        public override string RunA()
+        public override void ParseInput()
         {
             List<string> lines = Util.ReadFileToLines(InputFile); 
-            return lines[0]; 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        public override string RunA()
+        {
+            return ""; 
         }
 
         //----------------------------------------------------------------------------------------------

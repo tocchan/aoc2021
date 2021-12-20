@@ -13,6 +13,11 @@ namespace AoC2021
         private string InputFile = "inputs/14.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         private bool ApplyRules(ref string seq, Dictionary<string, char> rules)
         {
             StringBuilder sb = new StringBuilder(); 

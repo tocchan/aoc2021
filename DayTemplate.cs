@@ -8,19 +8,23 @@ namespace AoC2021
 {
     internal class DayTemplate : Day
     {
-        private string InputFile = "inputs/01.txt"; 
+
+        //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+            // string inputFile = "inputs/01.txt"; 
+            // List<string> lines = Util.ReadFileToLines(inputFile); 
+        }
 
         //----------------------------------------------------------------------------------------------
         public override string RunA()
         {
-            List<string> lines = Util.ReadFileToLines(InputFile); 
-            return lines[0]; 
+            return ""; 
         }
 
         //----------------------------------------------------------------------------------------------
         public override string RunB()
         {
-            // List<string> lines = Util.ReadFileToLines(InputFileB); 
             return ""; 
         }
     }

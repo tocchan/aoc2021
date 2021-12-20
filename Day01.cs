@@ -12,6 +12,11 @@ namespace AoC2021
         private string InputFileB = "inputs/01.txt"; 
 
         //----------------------------------------------------------------------------------------------
+        public override void ParseInput()
+        {
+        }
+
+        //----------------------------------------------------------------------------------------------
         public override string RunA()
         {
             List<string> lines = Util.ReadFileToLines(InputFileA); 
