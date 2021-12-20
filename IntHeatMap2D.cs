@@ -16,6 +16,21 @@ namespace AoC2021
             SetFromTightBlock( lines ); 
         }
 
+        public IntHeatMap2D( IntHeatMap2D src )
+        {
+            Resize( src.GetSize() ); 
+
+            BoundsValue = src.BoundsValue; 
+            src.Data.CopyTo( Data, 0 ); 
+        }
+
+        public IntHeatMap2D( ivec2 size, int borderValue = -1 )
+        {
+            Resize( size ); 
+            SetBoundsValue( borderValue ); 
+        }
+
+
         //----------------------------------------------------------------------------------------------
         public void Resize( int width, int height, bool keep = false )
         {
@@ -280,6 +295,25 @@ namespace AoC2021
 
             return total; 
         }
+
+        //----------------------------------------------------------------------------------------------
+        public int Count( int v )
+        {
+            int count = 0; 
+            for (int i = 0; i < Data.Length; ++i)
+            {
+                if (Data[i] == v)
+                {
+                    ++count;
+                }
+            }
+
+            return count;
+        }
+
+        //----------------------------------------------------------------------------------------------
+        public void SetBoundsValue( int v ) => BoundsValue = v; 
+        public int GetBoundsValue() => BoundsValue; 
 
         //----------------------------------------------------------------------------------------------
         private int[] Data = new int[0];  
