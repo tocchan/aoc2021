@@ -39,6 +39,12 @@ namespace AoC2021
         public int GetLengthSquared() => x * x + y * y; 
         public float GetLength() => MathF.Sqrt( (float) GetLengthSquared() ); 
 
+        public int this[int i]
+        {
+            get { return (i == 0) ? x : y; }
+            set { if (i == 0) { x = value; } else { y = value; } }
+        }
+
         public static ivec2 operator +( ivec2 v ) => v; 
         public static ivec2 operator -( ivec2 v ) => new ivec2( -v.x, -v.y ); 
         public static ivec2 operator +( ivec2 a, ivec2 b ) => new ivec2( a.x + b.x, a.y + b.y ); 

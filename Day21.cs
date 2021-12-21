@@ -16,7 +16,7 @@ namespace AoC2021
         //----------------------------------------------------------------------------------------------
         public override void ParseInput()
         {
-            string inputFile = "inputs/21d.txt"; 
+            string inputFile = "inputs/21.txt"; 
             List<string> lines = Util.ReadFileToLines(inputFile); 
 
             StartingPositions[0] = int.Parse( lines[0].Split(':')[1] ); 
@@ -92,125 +92,128 @@ namespace AoC2021
         //----------------------------------------------------------------------------------------------
         public override string RunB()
         {
-            int[] diceDistribution = { 1, 3, 6, 7, 6, 3, 1 }; // dice rolls for the day
-
-            int targetScore = 21; 
-            ScorePotential[] potential = { new ScorePotential(), new ScorePotential() }; 
-            potential[0].SetStartPosition( StartingPositions[0], targetScore ); 
-            potential[1].SetStartPosition( StartingPositions[1], targetScore ); 
+            QuantumGame game = new QuantumGame(); 
+            game.Init( StartingPositions[0], StartingPositions[1] ); 
 
             int turnNumber = 0; 
-            while (!potential[0].IsFinished(targetScore) && !potential[1].IsFinished(targetScore) )
+            while (!game.IsDone())
             {
-                int player = turnNumber % 2; 
-                turnNumber++; 
-
-                if (player == 0)
-                {
-                    potential[player].ApplyDay( diceDistribution, targetScore ); 
-                }
+                game.RunTurn( turnNumber ); 
+                ++turnNumber; 
             }
 
-            int winningPlayer = (turnNumber - 1) % 2; 
-            Int64 numUniverses = potential[winningPlayer].GetUniverseSum(); 
-            return numUniverses.ToString();
+            return game.Wins.Max().ToString(); 
         }
     }
 
-    public class ScorePotential
+    public struct BoardState 
     {
-        // keeps track the number of universes have this score on a particular day
-        private Int64[,] ScorePossibilities = new long[10,21]; 
-        private Int64[] BoardPossibilities = new Int64[10]; 
-        private Int64 FinishedUniverses = 0; 
+        public ivec2 Positions; 
+        public ivec2 Scores;
 
-        public void SetStartPosition( int pos, int targetScore )
+        public void Change( int player, int roll )
         {
-            BoardPossibilities[pos - 1] = 1; 
+            Positions[player] += roll; 
+            if (Positions[player] > 10)
+            {
+                Positions[player] -= 10; 
+            }
 
-            // every board state has one possible universe at 0
-            ScorePossibilities = new Int64[10,targetScore]; 
-            ScorePossibilities[pos - 1,0] = 1; 
+            Scores[player] += Positions[player];
         }
 
-        public void ApplyDay( int[] distribution, int targetScore )
+        public BoardState GetNextState(int player, int roll)
         {
-            Int64[] newBoardPossibilities = new Int64[10]; 
-            Int64[,] newScores = new Int64[10,targetScore]; 
+            BoardState nextState = new BoardState(); 
+            nextState.Positions = Positions; 
+            nextState.Scores = Scores; 
+            nextState.Change( player, roll ); 
+            return nextState; 
+        }
 
-            // Update board state
-            for (int j = 0; j < distribution.Length; ++j)
+        public bool IsComplete()
+        {
+            return GetWinner() >= 0; 
+        }
+
+        public int GetWinner()
+        {
+            if (Scores.x >= 21)
             {
-                int roll = 3 + j; 
-                Int64 probability = distribution[j]; 
+                return 0; 
+            }
+            else if (Scores.y >= 21)
+            {
+                return 1; 
+            }
+            else
+            {
+                return -1; 
+            }
+        }
 
-                // update potential board state
-                for (int i = 0; i < BoardPossibilities.Length; ++i)
+        public override int GetHashCode()
+        {
+            return HashCode.Combine( Positions.GetHashCode(), Scores.GetHashCode() ); 
+        }
+    }
+
+    public class QuantumGame
+    {
+        private Dictionary<BoardState,Int64> CurrentState = new Dictionary<BoardState, Int64>();
+        private int[] DiceDistribution = { 1, 3, 6, 7, 6, 3, 1 }; 
+        public Int64[] Wins = { 0, 0 }; 
+
+        public void Init( int start0, int start1 )
+        {
+            BoardState state; 
+            state.Positions = new ivec2( start0, start1 ); 
+            state.Scores = ivec2.ZERO; 
+
+            CurrentState[state] = 1L; 
+        }
+
+        public void RunTurn( int turnNumber )
+        { 
+            int player = turnNumber % 2; 
+            Dictionary<BoardState,Int64> nextState = new Dictionary<BoardState, Int64>();
+
+            foreach ((BoardState state, Int64 count) in CurrentState) 
+            {
+                for (int i = 0; i < DiceDistribution.Length; ++i)
                 {
-                    int newBoardPos = i + roll; 
-                    if (newBoardPos >= 10)
+                    int roll = 3 + i; 
+                    int prob = DiceDistribution[i]; 
+
+                    BoardState newState = state.GetNextState( player, roll ); 
+                    Int64 newCount = count * prob; 
+                    int winner = newState.GetWinner(); 
+                    if (winner >= 0)
                     {
-                        newBoardPos -= 10; 
+                        Wins[winner] += newCount; 
                     }
-
-                    for (int scoreIdx = 0; scoreIdx < targetScore; ++scoreIdx) 
+                    else
                     {
-                        int newScore = scoreIdx + newBoardPos + 1; 
-                        Int64 universesInThisState = ScorePossibilities[i,scoreIdx]; 
-                        Int64 newUniverses = universesInThisState * probability;
-
-                        if (newScore >= targetScore)
+                        Int64 oldVal;
+                        if (nextState.TryGetValue( newState, out oldVal ))
                         {
-                            FinishedUniverses += newUniverses; 
+                            nextState[newState] = oldVal + newCount; 
                         }
-                        else 
-                        { 
-                            newBoardPossibilities[newBoardPos] += newUniverses; 
-                            newScores[newBoardPos, newScore] += newUniverses; 
+                        else
+                        {
+                            nextState[newState] = newCount; 
+
                         }
                     }
                 }
             }
-            BoardPossibilities = newBoardPossibilities; 
-            ScorePossibilities = newScores; 
 
-            DebugCheck(); 
+            CurrentState = nextState; 
         }
 
-        private bool DebugCheck()
+        public bool IsDone()
         {
-            Int64 boardPossibilityCount = BoardPossibilities.Sum(); 
-
-            Int64 scoreCount = 0; 
-            for (int i = 0; i < 10; ++i)
-            {
-                for (int j = 0; j < 21; ++j) 
-                { 
-                    scoreCount += ScorePossibilities[i,j]; 
-                }
-            }
-
-            return boardPossibilityCount == scoreCount; 
-        }
-
-        public bool IsFinished( int targetScore )
-        {
-            for (int i = 0; i < 10; ++i)
-            {
-                for (int j = 0; j < targetScore; ++j)
-                {
-                    if (ScorePossibilities[i,j] > 0)
-                    {
-                        return false; 
-                    }
-                }
-            }
-            return true; 
-        }
-
-        public Int64 GetUniverseSum()
-        {
-            return FinishedUniverses;
+            return CurrentState.Count() == 0; 
         }
     }
 }
