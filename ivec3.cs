@@ -42,10 +42,33 @@ namespace AoC2021
             (x, y, z) = t; 
         }
 
+        public int this[int i]
+        {
+            get => i switch
+            {
+                0 => x,
+                1 => y, 
+                2 => z, 
+                _ => 0
+            };
+
+            set
+            {
+                switch (i)
+                {
+                    case 0: x = value; break; 
+                    case 1: y = value; break; 
+                    case 2: z = value; break; 
+                    default: break; 
+                }
+            }
+        }
+
         public int Dot( ivec3 v ) => x * v.x + y * v.y + z * v.z; 
         public int GetLengthSquared() => x * x + y * y + z * z; 
         public float GetLength() => MathF.Sqrt( (float) GetLengthSquared() ); 
         public int Sum() { return x + y + z; }
+        public int Product() { return x * y * z; }
         public int GetManhattanDistance() { return ivec3.Abs(this).Sum(); }
 
         public static ivec3 operator +( ivec3 v ) => v; 
