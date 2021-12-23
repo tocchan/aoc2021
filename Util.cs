@@ -9,6 +9,7 @@ namespace AoC2021
 {
     static class Util
     {
+        //----------------------------------------------------------------------------------------------
         public static List<string> ReadFileToLines( string filename )
         {
             string[] lines; 
@@ -32,11 +33,13 @@ namespace AoC2021
             }
         }
 
+        //----------------------------------------------------------------------------------------------
         public static Int64 BinaryStringToInt( string s )
         {
             return Convert.ToInt64( s, 2 );
         }
 
+        //----------------------------------------------------------------------------------------------
         public static string ApplyMarkup( string str )
         {
             (string,string)[] list = {
@@ -77,11 +80,13 @@ namespace AoC2021
             return $"{str}{list[0].Item2}"; 
         }
 
+        //----------------------------------------------------------------------------------------------
         public static void WriteLine( string line )
         {
             Console.WriteLine( ApplyMarkup(line) ); 
         }
 
+        //----------------------------------------------------------------------------------------------
         public static (float, float) Quadratic( float a, float b, float c )
         {
             float inner = b * b - 4 * a * c; 
@@ -101,6 +106,64 @@ namespace AoC2021
         public static int HexToByte( char c )
         {
             return (c <= '9') ? (c - '0') : (c - 'A' + 10); 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        public static T[] GetSubsetByRemovingAt<T>( this T[] array, int idx, int count = 1 )
+        {
+            count = Math.Clamp( count, 0, array.Length - idx ); 
+            int newCount = Math.Max( array.Length - count, 0 ); 
+            T[] newArray = new T[newCount]; 
+
+            for (int i = 0; i < idx; ++i)
+            {
+                newArray[i] = array[i]; 
+            }
+
+            for (int i = idx; i < newCount; ++i)
+            {
+                newArray[i] = array[i + count]; 
+            }
+
+            return newArray; 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        private static (int,int)[] PermutePairs( int v0, int[] set )
+        {
+            if (set.Length == 1)
+            {
+                return new (int, int)[] { (v0, set[0]) }; 
+            }
+
+            List<(int,int)> sets = new List<(int, int)>(); 
+            for (int i = 0; i < set.Length; ++i)
+            {
+                int v1 = set[i]; 
+                int[] subset = set.GetSubsetByRemovingAt(i); 
+                (int, int)[] subsetPairs = PermutePairs( v0 + 1, subset ); 
+
+                for (int j = 0; j < subsetPairs.Length; j += subset.Length)
+                {
+                    sets.Add( (v0, v1) ); 
+                    for (int k = 0; k < subset.Length; ++k)
+                    {
+                        sets.Add( subsetPairs[j + k] ); 
+                    }
+                }
+            }
+            
+            return sets.ToArray(); 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        // Given 0 to N inputs and outputs, will 
+        // generate all possible ways to hook them up.  
+        // Returned array will be size X * N, where X is the number of possible hookups
+        public static (int,int)[] PermutePairs( int setSize )
+        {
+            int[] initialSet = Enumerable.Range(0, setSize).ToArray(); 
+            return PermutePairs( 0, initialSet ); 
         }
     }
 }

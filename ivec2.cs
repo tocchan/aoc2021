@@ -35,9 +35,14 @@ namespace AoC2021
             y = yv; 
         }
 
+        public int Sum() => x + y; 
+        public int Product() => x * y; 
+
         public int Dot( ivec2 v ) => x * v.x + y * v.y; 
         public int GetLengthSquared() => x * x + y * y; 
         public float GetLength() => MathF.Sqrt( (float) GetLengthSquared() ); 
+
+        public int GetManhattanDistance() => Abs(this).Sum();
 
         public int this[int i]
         {
@@ -62,7 +67,7 @@ namespace AoC2021
         public static ivec2 Sign( ivec2 v ) => new ivec2( Math.Sign(v.x), Math.Sign(v.y) ); 
         public static ivec2 Min( ivec2 a, ivec2 b ) => new ivec2( Math.Min(a.x, b.x), Math.Min(a.y, b.y) ); 
         public static ivec2 Max( ivec2 a, ivec2 b ) => new ivec2( Math.Max(a.x, b.x), Math.Max(a.y, b.y) ); 
-
+        public static ivec2 Abs( ivec2 v ) => new ivec2( Math.Abs(v.x), Math.Abs(v.y) ); 
         public static ivec2 Max( IEnumerable<ivec2> list )
         {
             ivec2 ret = list.First(); 

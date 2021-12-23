@@ -4,8 +4,10 @@ namespace AoC2021
 {
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
-    public class IntHeatMap2D : IEnumerable<(ivec2,int)>
+    public class IntHeatMap2D : IEnumerable<(ivec2,int)>, System.ICloneable
     {
+        public IntHeatMap2D? HackParent = null; 
+
         //----------------------------------------------------------------------------------------------
         public IntHeatMap2D()
         {
@@ -24,12 +26,33 @@ namespace AoC2021
             src.Data.CopyTo( Data, 0 ); 
         }
 
-        public IntHeatMap2D( ivec2 size, int borderValue = -1 )
+        public IntHeatMap2D( ivec2 size, int defValue = 0, int borderValue = -1 )
         {
-            Resize( size ); 
+            Init( size, defValue, borderValue );
+        }
+
+        //----------------------------------------------------------------------------------------------
+        object ICloneable.Clone()
+        {
+            return new IntHeatMap2D(this);
+        }
+
+        public IntHeatMap2D GetSubRegion( int startX, int startY, int width, int height )
+        {
+            IntHeatMap2D map = new IntHeatMap2D( new ivec2(width, height), 0, GetBoundsValue() ); 
+            map.Copy( this, 1, 1, width, height, 0, 0 ); 
+            return map; 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        public void Init( int width, int height, int defValue, int borderValue = -1 )
+        {
+            Resize( width, height ); 
+            SetAll( defValue ); 
             SetBoundsValue( borderValue ); 
         }
 
+        public void Init( ivec2 size, int defValue, int borderValue = -1 ) => Init( size.x, size.y, defValue, borderValue ); 
 
         //----------------------------------------------------------------------------------------------
         public void Resize( int width, int height, bool keep = false )
@@ -80,6 +103,29 @@ namespace AoC2021
                 }
             }
         }
+        public void Copy( IntHeatMap2D src, int srcX, int srcY, int width, int height, int dstX, int dstY )
+        {
+            width = Math.Min( GetWidth() - dstX, width ); 
+            height = Math.Min( GetHeight() - dstY, height ); 
+
+            ivec2 srcPos; 
+            ivec2 dstPos; 
+            for (int y = 0; y < height; ++y)
+            {
+                srcPos.y = srcY + y; 
+                dstPos.y = dstY + y; 
+
+                for (int x = 0; x < width; ++x)
+                {
+                    srcPos.x = srcX + x; 
+                    dstPos.x = dstX + x; 
+
+                    int val = src.Get(srcPos); 
+                    Set(dstPos, val); 
+                }
+            }
+        }
+
 
         //----------------------------------------------------------------------------------------------
         public void SetFromTightBlock( List<string> lines, int boundsValue = int.MaxValue )
@@ -118,6 +164,15 @@ namespace AoC2021
             }
         }
         public void Set( ivec2 pos, int value ) => Set( pos.x, pos.y, value ); 
+
+        //----------------------------------------------------------------------------------------------
+        public void SetAll( int value )
+        {
+            for (int i = 0; i < Data.Length; ++i)
+            {
+                Data[i] = value; 
+            }
+        }
 
         //----------------------------------------------------------------------------------------------
         public int Get( int x, int y )
@@ -312,8 +367,61 @@ namespace AoC2021
         }
 
         //----------------------------------------------------------------------------------------------
+        public override int GetHashCode()
+        {
+            int hash = 0; 
+            foreach (int v in Data)
+            {
+                hash = HashCode.Combine( hash, v ); 
+            }
+
+            return hash; 
+        }
+
+        //----------------------------------------------------------------------------------------------
+        public override bool Equals(object? obj)
+        {
+            IntHeatMap2D? hm = obj as IntHeatMap2D;
+            if (hm == null)
+            { 
+                return false; 
+            }
+            
+            if (hm.GetSize() != GetSize())
+            {
+                return false; 
+            }
+
+            for (int i = 0; i < Data.Length; ++i)
+            {
+                if (Data[i] != hm.Data[i])
+                {
+                    return false; 
+                }
+            }
+
+            return true; 
+        }
+
+        public static bool IsEqual( IntHeatMap2D? a, IntHeatMap2D? b )
+        {
+            if ((a == null) && (b == null))
+            {
+                return true; 
+            }
+            else if ((a == null) || (b == null))
+            {
+                return false; 
+            }
+            else
+            {
+                return a.Equals(b); 
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------
         public void SetBoundsValue( int v ) => BoundsValue = v; 
-        public int GetBoundsValue() => BoundsValue; 
+        public int GetBoundsValue() => BoundsValue;
 
         //----------------------------------------------------------------------------------------------
         private int[] Data = new int[0];  
@@ -321,4 +429,18 @@ namespace AoC2021
         private int Height = 0; 
         private int BoundsValue = int.MaxValue;
     }
+
+    public class IntHeatMap2DComparer : IEqualityComparer<IntHeatMap2D>
+    {
+        public bool Equals(IntHeatMap2D? a, IntHeatMap2D? b)
+        {
+            return IntHeatMap2D.IsEqual(a, b); 
+        }
+
+        public int GetHashCode(IntHeatMap2D hm)
+        {
+            return hm.GetHashCode(); 
+        }
+    }
+
 }
