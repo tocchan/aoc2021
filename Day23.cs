@@ -98,10 +98,7 @@ namespace AoC2021
                 dst[y].y = y + 2; 
             }
 
-            // try every combination, and return the min one
-            // (need some combinitoric library, there is only 24 cases here, but I'm going to be looping 26... :)
             int minCost = int.MaxValue;
-
             (int,int)[] permutations = GetPermuations( src.Length ); 
 
             for (int i = 0; i < permutations.Length; i += src.Length)
@@ -460,7 +457,7 @@ namespace AoC2021
                 if ((currentCost == 0) 
                     || (currentCost == predCost))
                 {
-                    // PrintBoard(turn, move, false); 
+                    PrintBoard(turn, move, false); 
                 }
                 ++turn; 
 
